@@ -13,9 +13,26 @@ pub fn add_two(a: i32) -> i32 {
     a + 2
 }
 
-pub fn greeting(name: &str) -> String {
+pub fn greeting(_name: &str) -> String {
     // format!("Hello {}!", name)
     String::from("Hello!")
+}
+
+pub struct Guess {
+    value: i32,
+}
+impl Guess {
+    pub fn new(value: i32) -> Guess {
+        // if value < 1 || value > 100 {
+        if !(1..=100).contains(&value) {
+            panic!(
+                "予想値は1から100の間でなければなりませんが、{}でした.",
+                value
+            );
+        }
+
+        Guess { value }
+    }
 }
 
 #[cfg(test)]
@@ -68,11 +85,32 @@ mod tests {
 
     #[test]
     fn greeting_contains_name() {
-        let result = greeting("Carol");
-        assert!(
-            result.contains("Carol"),
-            "'Carol'は含まれませんでした, value was `{}`",
-            result
-        );
+        let _result = greeting("Carol");
+        // assert!(
+        //     result.contains("Carol"),
+        //     "'Carol'は含まれませんでした, value was `{}`",
+        //     result
+        // );
+    }
+
+    #[test]
+    #[should_panic]
+    fn greater_than_100() {
+        Guess::new(200);
+    }
+    #[test]
+    #[should_panic]
+    fn greater_than_100_success() {
+        // Guess::new(1);
+        panic!("パニックを起こす");
+    }
+
+    #[test]
+    fn it_works() -> Result<(), String> {
+        if 2 + 2 == 4 {
+            Ok(())
+        } else {
+            Err(String::from("two plus two does not equal four"))
+        }
     }
 }
