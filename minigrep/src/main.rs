@@ -1,3 +1,4 @@
+use std::error::Error;
 use std::fs::File;
 use std::io::Read;
 use std::{env, process};
@@ -16,19 +17,22 @@ fn main() {
     // {}というファイルの中
     println!("In file {}", config.filename);
 
-    run(config);
+    if let Err(e) = run(config) {
+        println!("Application error: {}", e);
+        process::exit(1);
+    };
 }
 
-fn run(config: Config) {
-    let mut f = File::open(config.filename).expect("file not found");
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let mut f = File::open(config.filename)?;
 
     let mut contents = String::new();
-    f.read_to_string(&mut contents)
-        // ファイルの読み込み中に問題がありました
-        .expect("something went wrong reading the file");
+    f.read_to_string(&mut contents)?;
 
     // テキストは\n{}です
     println!("With text:\n{}", contents);
+
+    Ok(())
 }
 
 struct Config {
