@@ -1,5 +1,5 @@
-mod libs;
-use libs::Config;
+mod lib;
+use lib::Config;
 use std::env;
 use std::process;
 
@@ -17,7 +17,7 @@ fn main() {
     // {}というファイルの中
     println!("In file {}", config.filename);
 
-    if let Err(e) = libs::run(config) {
+    if let Err(e) = lib::run(config) {
         println!("Application error: {}", e);
         process::exit(1);
     };
