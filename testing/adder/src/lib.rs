@@ -84,13 +84,14 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn greeting_contains_name() {
-        let _result = greeting("Carol");
-        // assert!(
-        //     result.contains("Carol"),
-        //     "'Carol'は含まれませんでした, value was `{}`",
-        //     result
-        // );
+        let result = greeting("Carol");
+        assert!(
+            result.contains("Carol"),
+            "'Carol'は含まれませんでした, value was `{}`",
+            result
+        );
     }
 
     #[test]
